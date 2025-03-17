@@ -22,7 +22,7 @@ Pour faire fonctionner le projet localement, suivez ces étapes :
 1. Clonez le repository :
 ```bash
 git clone <url-du-repo>
-cd chatbot-test
+cd chatbot-test-technique
 ```
 
 2. Installez les dépendances :
