@@ -114,14 +114,9 @@ Ce test technique comporte deux parties :
 
 ### Partie 1 : Analyse critique du code existant
 
-Votre première tâche consiste à analyser le code existant du chatbot et à fournir une critique constructive. Nous vous demandons de :
+La première tâche consiste à analyser le code existant du chatbot et à fournir une critique rapide et constructive. Nous vous demandons d'évaluer la qualité générale du code et son niveau (débutant, intermédiaire, avancé) et de justifier votre analyse.
 
-1. Évaluer la qualité générale du code et son niveau (débutant, intermédiaire, avancé)
-2. Identifier les forces et les faiblesses du projet
-3. Proposer des améliorations concrètes si necessaires (architecture, performance, UX, accessibilité, etc.)
-4. Expliquer comment vous implémenteriez ces améliorations
-
-**Important** : Vous n'êtes pas obligé de refaire entièrement le chatbot. Vous pouvez modifier le code existant si vous le souhaitez pour illustrer vos propos, mais l'objectif principal est d'émettre un avis critique et constructif sur le projet.
+**Important** : Il n'est pas demandé de corriger le code du chatbot. Vous pouvez modifier le code existant si vous le souhaitez pour illustrer vos propos, mais l'objectif principal est d'émettre un avis rapide, critique et constructif sur le projet.
 
 ### Partie 2 : Conceptualisation d'un système d'assistance à la construction de requêtes
 
