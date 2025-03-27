@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { Message } from '@prisma/client';
 import ChatInput from './ChatInput';
 import MessageList from './MessageList';
+import QueryBuilderTwo from './QueryBuilderTwo'; 
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Composant principal du chatbot
@@ -12,9 +14,10 @@ import MessageList from './MessageList';
 export default function Chatbot() {
   // États pour gérer les messages, la conversation et les états de chargement
   const [messages, setMessages] = useState<Message[]>([]);
-  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isBuildingQuery, setIsBuildingQuery] = useState(false);
 
   /**
    * Crée une nouvelle conversation
@@ -55,7 +58,7 @@ export default function Chatbot() {
 
     // Créer un message temporaire pour l'affichage immédiat
     const tempUserMessage: Message = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       content,
       isUserMessage: true,
       createdAt: new Date(),
@@ -110,6 +113,30 @@ export default function Chatbot() {
     }
   };
 
+  /**
+   * Méthode permettant la construction et l'envoi du message de la requête structurée
+   * @param query la requête à envoyer
+   * @param messageContent Contenu du message à envoyer
+   */  
+  const handleQueryBuilt = (query: { optionId: string | null; locationIds: string[]; itemIds: string[] }, messageContent: string) => {
+    console.log('Requête construite dans Chatbot:', query);
+    if (query.optionId) {
+      const structuredUserMessage: Message = {
+        id: uuidv4() + '-structured',
+        content: messageContent,
+        isUserMessage: true,
+        createdAt: new Date(),
+        conversationId,
+      };
+      setMessages((prev) => [...prev, structuredUserMessage]);
+    }
+    setIsBuildingQuery(false);
+  };
+
+  const handleCancelQueryBuilder = () => {
+    setIsBuildingQuery(false);
+  };
+
   return (
     <div className="flex flex-col h-[80vh] w-full max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl border border-gray-200 bg-white">
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex justify-between items-center">
@@ -127,11 +154,27 @@ export default function Chatbot() {
         </button>
       </div>
       <div className="flex-1 bg-gray-50 overflow-hidden flex flex-col">
-        <MessageList messages={messages} isTyping={isTyping} />
+      {isBuildingQuery && <QueryBuilderTwo onQueryBuilt={handleQueryBuilt} onCancel={handleCancelQueryBuilder} />}
+        {!isBuildingQuery && <MessageList messages={messages} isTyping={isTyping} />}
         <div className="p-4 border-t border-gray-200 bg-white">
-          <ChatInput onSendMessage={handleSendMessage} isDisabled={isLoading || !conversationId} />
-        </div>
+          {!isBuildingQuery && (
+            <ChatInput
+              onSendMessage={(messageContent) => {
+                handleSendMessage(messageContent);
+              }}
+              isDisabled={isLoading || !conversationId}
+            />
+          )}
+          {!isBuildingQuery && (
+            <button
+              onClick={() => setIsBuildingQuery(true)}
+              className="mt-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Construire une requête structurée
+            </button>
+          )}
       </div>
     </div>
+  </div>
   );
 } 
