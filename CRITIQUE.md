@@ -38,7 +38,7 @@ Actuellement les erreurs sont affichées dans la console, ce serait pratique d�
 ## Mauvaise utilisation de l’ID 
 
 L’utilisation de Date.now().toString() pour générer un id temporaire, ce qui n'est pas optimal car :
-* Cela peut créer des IDs en double si plusieurs messages sont envoyés rapidement.
+* Cela peut créer des IDs en double si plusieurs messages sont envoyés rapidement (presque)
 * Ce n’est pas un UUID valide.
 Une librairie comme uuid est efficace pour ce cas.
 
@@ -55,7 +55,7 @@ Un hook personnalisé pour gérer la logique de communication avec l'API si elle
 ## Optimisation de la gestion des événements (handleSubmit et handleKeyDown)
 
 Actuellement, handleSubmit et handleKeyDown répètent presque la même logique pour envoyer le message.
-Crée une fonction sendMessage() et réutilise-la dans les deux handlers
+Créer une fonction sendMessage() et la réeutiliser dans les deux handlers seraient favorables
 
 ## Amélioration de l’expérience utilisateur sur mobile
 

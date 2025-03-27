@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Message } from '@prisma/client';
 import ChatInput from './ChatInput';
 import MessageList from './MessageList';
-import QueryBuilderTwo from './QueryBuilderTwo'; 
+import QueryBuilder from './QueryBuilder'; 
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -154,7 +154,7 @@ export default function Chatbot() {
         </button>
       </div>
       <div className="flex-1 bg-gray-50 overflow-hidden flex flex-col">
-      {isBuildingQuery && <QueryBuilderTwo onQueryBuilt={handleQueryBuilt} onCancel={handleCancelQueryBuilder} />}
+      {isBuildingQuery && <QueryBuilder onQueryBuilt={handleQueryBuilt} onCancel={handleCancelQueryBuilder} />}
         {!isBuildingQuery && <MessageList messages={messages} isTyping={isTyping} />}
         <div className="p-4 border-t border-gray-200 bg-white">
           {!isBuildingQuery && (
